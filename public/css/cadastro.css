@@ -1,0 +1,102 @@
+body{
+    background-color: rgb(207, 25, 25);
+}
+
+/*Topo do cadastro =========*/
+
+.topo_cadastro {
+    background-color: #068ED0;
+    display: flex;
+    align-items: center;
+    padding: 5px; 
+}
+
+.topo_cadastro img {
+    margin-right: 20px;  
+}
+
+.topo_cadastro h2 {
+    margin: 0; 
+    color: white;
+}
+
+/*Formulario do cadastro =========*/ 
+
+.formulario_cadastro{
+    padding: 35px;
+}
+
+.formulario_cadastro .col-md-6.mb-3 {
+    padding: 10px;
+    
+}
+
+
+.formulario_cadastro .form-control {
+    border: none;                  
+    border-bottom: 2px solid #000; 
+    outline: none;                 
+    padding: 5px 0;               
+    border-radius: 0px;
+}
+
+
+.formulario_checkbox{
+    margin-top: 30px;
+}
+
+
+/*Config do botão (cadastrar usuario) =========*/
+.btn-info {
+    background: linear-gradient(135deg, #068ED0, #43b8f3);
+    color: white !important; 
+    padding: 12px 30px !important; 
+    font-weight: bold !important;
+    border: none; 
+    border-radius: 20px; 
+    font-size: 16px; 
+    transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #36a0ce, #068ED0); 
+    transform: scale(1.05); 
+    cursor: pointer; 
+}
+
+.mt-4 {
+    margin-top: 20px; 
+}
+
+
+/* Contatos cadastrados ====== */
+.contatos_cadastrados {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tabela_cadastros tr th {
+    background-color: #24adf1;
+    border: none;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.tabela_informacoes_cadastradas tr td {
+    border: none;
+    text-align: center;
+}
+
+.tabela_informacoes_cadastradas {
+    border: none;
+    text-align: center;
+}
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+
