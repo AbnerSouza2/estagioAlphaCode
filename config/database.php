@@ -32,16 +32,16 @@ $contatos = $contatoController->index();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['salvar'])) {
-        $contatoController->store($_POST);
+        $contatoController->salvar_cadastro($_POST);
         header("Location: index.php");
         exit();
     } elseif (isset($_POST['editar'])) {
-        $contatoController->update($_POST);
+        $contatoController->atualizar_cadastro($_POST);
         header("Location: index.php");
         exit();
     } elseif (isset($_POST['excluir'])) {
-        $contatoController->destroy($_POST['id']);
-        header("Location: index.php");
+        $contatoController->excluir_cadastro($_POST['id']);
+    
         exit();
     }
 }
