@@ -46,7 +46,7 @@ $contatos = $contatoController->index();
 <body>
     <div class="container mt-5">
         <div class="topo_cadastro">
-            <img src="../assets/logo_alphacode.png" alt="">
+            <img src="../public/assets/logo_alphacode.png" alt="">
             <h2>Cadastro de Contatos</h2>
         </div>
 
@@ -142,7 +142,7 @@ $contatos = $contatoController->index();
                                 <form method="POST" action="index.php" class="d-inline" id="form-excluir-<?= $contato['id'] ?>">
                                     <input type="hidden" name="id" value="<?= $contato['id'] ?>">
                                     <button type="button" class="btn-excluir" data-id="<?= $contato['id'] ?>" style="border: none; background: none;">
-                                        <img src="../assets/excluir.png" alt="Excluir" style="width: 20px; height: 20px;">
+                                        <img src="../public/assets/excluir.png" alt="Excluir" style="width: 20px; height: 20px;">
                                     </button>
                                 </form>
                             </td>
@@ -154,23 +154,8 @@ $contatos = $contatoController->index();
 
     </div>
 
-    <script>
-        $(document).ready(function () {
-            $(".btn-excluir").click(function (event) {
-                event.preventDefault(); 
 
-                let contatoId = $(this).data("id"); 
-
-                if (confirm("Tem certeza que deseja excluir este contato?")) {
-                    $.post("index.php", { excluir: true, id: contatoId }, function (response) {
-                        location.reload();
-                    });
-                }
-            });
-        });
-    </script>
-
-
+    <script src="../public/js/cadastro.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
