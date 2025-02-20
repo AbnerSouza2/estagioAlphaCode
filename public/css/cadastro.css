@@ -1,18 +1,13 @@
-body{
-    background-color: rgb(207, 25, 25);
-}
-
 /*Topo do cadastro =========*/
-
 .topo_cadastro {
     background-color: #068ED0;
     display: flex;
     align-items: center;
-    padding: 5px; 
 }
 
 .topo_cadastro img {
-    margin-right: 20px;  
+    margin-right: 20px; 
+
 }
 
 .topo_cadastro h2 {
@@ -20,47 +15,77 @@ body{
     color: white;
 }
 
-/*Formulario do cadastro =========*/ 
 
+
+/*Formulario do cadastro =========*/ 
 .formulario_cadastro{
     padding: 35px;
 }
 
 .formulario_cadastro .col-md-6.mb-3 {
     padding: 10px;
-    
 }
-
 
 .formulario_cadastro .form-control {
     border: none;                  
-    border-bottom: 2px solid #000; 
+    border-bottom: 2px solid rgb(182, 182, 182) ; 
     outline: none;                 
     padding: 5px 0;               
     border-radius: 0px;
 }
 
+.label-cadastro{
+    font-size: 17px !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: #8d8d8d;
+}
 
 .formulario_checkbox{
     margin-top: 30px;
 }
 
 
+
+/* Efeito de mudança de cor ao selecionar os campos de cadastro */
+.mb-4:focus-within label {
+    color: #3ebfff!important;
+}
+
+.form-control:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.form-control {
+    border: none;
+    border-bottom: 2px solid rgb(182, 182, 182);
+    transition: all 0.1s ease-in-out; 
+}
+
+.form-control:focus {
+    border-bottom: 3px solid #3ebfff !important; 
+    transform: scale(1.01); 
+}
+
+
+
+
 /*Config do botão (cadastrar usuario) =========*/
 .btn-info {
     background: linear-gradient(135deg, #068ED0, #43b8f3);
     color: white !important; 
-    padding: 12px 30px !important; 
+    padding: 10px 17px !important; 
     font-weight: bold !important;
-    border: none; 
-    border-radius: 20px; 
-    font-size: 16px; 
+    border: none !; 
+    border-radius: 10px !important; 
+    font-size: 17px !important; 
     transition: all 0.3s ease;
 }
 
 .btn-info:hover {
     background: linear-gradient(135deg, #36a0ce, #068ED0); 
-    transform: scale(1.05); 
+    transform: scale(1.01); 
     cursor: pointer; 
 }
 
@@ -69,7 +94,8 @@ body{
 }
 
 
-/* Contatos cadastrados ====== */
+
+/* Contatos cadastrados =========*/
 .contatos_cadastrados {
     text-align: center;
     margin-bottom: 30px;
@@ -97,6 +123,49 @@ body{
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+input::placeholder {
+    color: rgb(182, 182, 182) !important; 
+}
+
+input:-ms-input-placeholder { 
+    color: rgb(182, 182, 182) !important;
+}
+
+input::-ms-input-placeholder { 
+    color: rgb(182, 182, 182) !important;
+}
+
+
+
+/* Rodape =========*/
+.rodape {
+    background-color: #068ED0 !important;
+    color: white !important;
+    text-decoration: none;
+}
+
+.text-white{
+    text-decoration: none;
+}
+
+.text-white:hover {
+    color: #c0c0c0 !important;
+    transform: scale(1.01); 
+}
+
+@media (max-width: 767px) {
+    .rodape {
+        padding-left: 15px;
+        padding-right: 15px;
+    
+    }
+    .rodape .col-12 {
+        margin-top: 10px !important; 
+    }
+    
+
 }
 
 
