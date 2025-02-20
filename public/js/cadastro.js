@@ -16,29 +16,65 @@ $(document).ready(function () {
     $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js", function () {
         $('#telefone').mask('(00) 0000-0000');
         $('#celular').mask('(00) 90000-0000');
-    }); // **Correção: Fechamento correto da função `$.getScript()` aqui**
+    });
 
-    // Validação de Nome
+    function mostrarErro(campo, mensagem) {
+        let feedback = $(campo).next(".invalid-feedback");
+
+        if (feedback.length === 0) {
+            $(campo).after(`<small class="invalid-feedback d-block">${mensagem}</small>`);
+        } else {
+            feedback.text(mensagem).show();
+        }
+        
+        $(campo).addClass("is-invalid");
+    }
+
+    function removerErro(campo) {
+        $(campo).removeClass("is-invalid");
+        let feedback = $(campo).next(".invalid-feedback");
+        
+        if (feedback.length > 0) {
+            feedback.fadeOut(200, function () {
+                $(this).remove();
+            });
+        }
+    }
+
+// Validação de Nome
     $("#nome").on("input", function () {
         let nome = $(this).val();
-        let regex = /^[A-ZÀ-Ÿ][a-zà-ÿ]+( [A-ZÀ-Ÿ][a-zà-ÿ]+)+$/;
-        if (!regex.test(nome)) {
-            $(this).addClass("is-invalid");
+
+        nome = nome.replace(/\b\w/g, (letra) => letra.toUpperCase()).replace(/\b(de|da|do|e|von)\b/g, (letra) => letra.toLowerCase());
+        $(this).val(nome);  
+
+        let regex = /^[A-ZÀ-Ÿ][a-zà-ÿ]*(\s[A-ZÀ-Ÿ][a-zà-ÿ]+)*$/;
+
+        if (nome === "") {
+            removerErro(this); 
+        } else if (!regex.test(nome)) {
+            mostrarErro(this, "O nome deve conter pelo menos um sobrenome e começar com letra maiúscula.");
         } else {
-            $(this).removeClass("is-invalid");
+            removerErro(this); 
         }
     });
 
+
+    
     // Validação de Email
     $("#email").on("blur", function () {
         let email = $(this).val();
         let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!regex.test(email)) {
-            $(this).addClass("is-invalid");
+
+        if (email === "") {
+            removerErro(this); 
+        } else if (!regex.test(email)) {
+            mostrarErro(this, "Digite um email válido, como exemplo@dominio.com.");
         } else {
-            $(this).removeClass("is-invalid");
+            removerErro(this);  
         }
     });
+
 
     // Validação de Data de Nascimento
     $("#data_nascimento").on("blur", function () {
@@ -46,9 +82,9 @@ $(document).ready(function () {
         let anoMinimo = 1900;
         let anoMaximo = new Date().getFullYear();
         if (data.getFullYear() < anoMinimo || data.getFullYear() > anoMaximo) {
-            $(this).addClass("is-invalid");
+            mostrarErro(this, `Digite uma data válida`);
         } else {
-            $(this).removeClass("is-invalid");
+            removerErro(this);
         }
     });
 
