@@ -18,6 +18,12 @@ $(document).ready(function () {
         $('#celular').mask('(00) 90000-0000');
     });
 
+    // Máscara para telefone e celular
+    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js", function () {
+        $('#telefone').mask('(00) 0000-0000');
+        $('#celular').mask('(00) 90000-0000');
+    });
+
     function mostrarErro(campo, mensagem) {
         let feedback = $(campo).next(".invalid-feedback");
 
@@ -26,14 +32,13 @@ $(document).ready(function () {
         } else {
             feedback.text(mensagem).show();
         }
-        
         $(campo).addClass("is-invalid");
     }
 
     function removerErro(campo) {
         $(campo).removeClass("is-invalid");
         let feedback = $(campo).next(".invalid-feedback");
-        
+
         if (feedback.length > 0) {
             feedback.fadeOut(200, function () {
                 $(this).remove();
@@ -41,40 +46,37 @@ $(document).ready(function () {
         }
     }
 
-// Validação de Nome
+    // Validação de Nome
     $("#nome").on("input", function () {
         let nome = $(this).val();
 
         nome = nome.replace(/\b\w/g, (letra) => letra.toUpperCase()).replace(/\b(de|da|do|e|von)\b/g, (letra) => letra.toLowerCase());
-        $(this).val(nome);  
+        $(this).val(nome);
 
         let regex = /^[A-ZÀ-Ÿ][a-zà-ÿ]*(\s[A-ZÀ-Ÿ][a-zà-ÿ]+)*$/;
 
         if (nome === "") {
-            removerErro(this); 
+            removerErro(this);
         } else if (!regex.test(nome)) {
             mostrarErro(this, "O nome deve conter pelo menos um sobrenome e começar com letra maiúscula.");
         } else {
-            removerErro(this); 
+            removerErro(this);
         }
     });
 
-
-    
     // Validação de Email
     $("#email").on("blur", function () {
         let email = $(this).val();
         let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (email === "") {
-            removerErro(this); 
+            removerErro(this);
         } else if (!regex.test(email)) {
             mostrarErro(this, "Digite um email válido, como exemplo@gmail.com.");
         } else {
-            removerErro(this);  
+            removerErro(this);
         }
     });
-
 
     // Validação de Data de Nascimento
     $("#data_nascimento").on("blur", function () {
@@ -95,4 +97,24 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
+
+    $(document).ready(function () {
+        // Unificar exibição do Toast sem repetição
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('sucesso') && urlParams.get('sucesso') === '1') {
+            let toastElement = document.getElementById("toastSuccess");
+
+            if (toastElement) {
+                let toast = new bootstrap.Toast(toastElement);
+                toast.show();  
+             
+                setTimeout(function () {
+                    toast.hide();
+                    history.replaceState(null, '', window.location.pathname);  
+                }, 4000);  
+            }
+        }
+    });
+
 });
+
