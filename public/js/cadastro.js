@@ -69,7 +69,7 @@ $(document).ready(function () {
         if (email === "") {
             removerErro(this); 
         } else if (!regex.test(email)) {
-            mostrarErro(this, "Digite um email válido, como exemplo@dominio.com.");
+            mostrarErro(this, "Digite um email válido, como exemplo@gmail.com.");
         } else {
             removerErro(this);  
         }
