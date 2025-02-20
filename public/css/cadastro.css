@@ -3,14 +3,16 @@
     background-color: #068ED0;
     display: flex;
     align-items: center;
+
 }
 
 .topo_cadastro img {
     margin-right: 20px; 
+    height: 120px;
 
 }
 
-.topo_cadastro h2 {
+.topo_cadastro h3 {
     margin: 0; 
     color: white;
 }
@@ -20,6 +22,7 @@
 /*Formulario do cadastro =========*/ 
 .formulario_cadastro{
     padding: 35px;
+    margin-top: 30px;
 }
 
 .formulario_cadastro .col-md-6.mb-3 {
@@ -35,7 +38,7 @@
 }
 
 .label-cadastro{
-    font-size: 17px !important;
+    font-size: 16px !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
     color: #8d8d8d;
@@ -48,7 +51,7 @@
 
 
 /* Efeito de mudança de cor ao selecionar os campos de cadastro */
-.mb-4:focus-within label {
+.mb-5:focus-within .form-label {
     color: #3ebfff!important;
 }
 
@@ -67,7 +70,6 @@
     border-bottom: 3px solid #3ebfff !important; 
     transform: scale(1.01); 
 }
-
 
 
 
@@ -98,7 +100,35 @@
 /* Contatos cadastrados =========*/
 .contatos_cadastrados {
     text-align: center;
-    margin-bottom: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+}
+
+.contatos_cadastrados h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #8d8d8d;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.contatos_cadastrados h3::after {
+    content: "";
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #3ebfff, #1fa2ff, #3ebfff);
+    background-size: 200% 100%;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    border-radius: 10px;
+}
+
+
+table > tbody {
+    vertical-align: initial !important; 
 }
 
 .tabela_cadastros tr th {
@@ -137,6 +167,25 @@ input::-ms-input-placeholder {
     color: rgb(182, 182, 182) !important;
 }
 
+button:focus,
+button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.icones-cadastro {
+    transition: transform 0.2s ease-in-out;
+}
+
+.icones-cadastro:hover {
+    transform: scale(1.1);
+    
+}
+
+.tabela-cadastro-geral{
+    padding: 35px !important;
+}
+
 
 
 /* Rodape =========*/
@@ -168,4 +217,32 @@ input::-ms-input-placeholder {
 
 }
 
+/* Modal ========*/
+.modal-cabecalho{
+    background-color: #068ED0 !important;
+    color: white;
+}
 
+.modal-salvar{
+    background-color: #068ED0 !important;
+    background: linear-gradient(135deg, #068ED0, #43b8f3);
+    border: none !important;
+}
+
+.modal-salvar:hover {
+    background: linear-gradient(135deg, #36a0ce, #068ED0); 
+    transform: scale(1.01); 
+    cursor: pointer; 
+}
+
+.modal-cancelar{
+    background-color: #727272 !important;
+    background: linear-gradient(135deg, #777777, #646464);
+    border: none !important;
+}
+
+.modal-cancelar:hover{
+    background: linear-gradient(135deg, #818181, #818181); 
+    transform: scale(1.02); 
+    cursor: pointer; 
+}
