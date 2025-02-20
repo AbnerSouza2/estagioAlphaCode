@@ -44,7 +44,7 @@ $contatos = $contatoController->index();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-0">
         <div class="topo_cadastro">
             <img src="../public/assets/logo_alphacode.png" alt="">
             <h2>Cadastro de Contatos</h2>
@@ -64,7 +64,7 @@ $contatos = $contatoController->index();
                     </div>
                     <div class="mb-4">
                         <label for="telefone" class="form-label">Telefone para Contato</label>
-                        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(19) 4033-2019" required>
+                        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(19) 4033-2019">
                     </div>
                 </div>
 
