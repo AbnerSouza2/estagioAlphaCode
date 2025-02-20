@@ -32,13 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nome'])) {
 $contatos = $contatoController->index();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD de Contatos</title>
+    <title>Alphacode Cadastros</title>
+    <link rel="icon" type="image/png" href="../public/assets/logo_alphacode.png">
     <link rel="stylesheet" href="../public/css/cadastro.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -53,7 +53,7 @@ $contatos = $contatoController->index();
         <!-- Formulário de Cadastro -->
         <form method="POST" class="formulario_cadastro" action="index.php">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 label-cadastro">
                     <div class="mb-4">
                         <label for="nome" class="form-label">Nome Completo</label>
                         <input type="text" class="form-control" id="nome" name="nome" placeholder="EX.: Abner de Souza" required>
@@ -68,10 +68,12 @@ $contatos = $contatoController->index();
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 label-cadastro">
                     <div class="mb-4">
                         <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                        <input type="text" class="form-control" id="data_nascimento" name="data_nascimento" 
+                               placeholder=" Ex.: 18/12/1996" onfocus="(this.type='date')" 
+                               onblur="if(!this.value) this.type='text'">
                     </div>
                     <div class="mb-4">
                         <label for="profissao" class="form-label">Profissão</label>
@@ -152,8 +154,28 @@ $contatos = $contatoController->index();
             </table>
         </div>
 
-    </div>
+        <!-- Footer -->
+        <footer class="mt-5 py-4 rodape">
+            <div class="container">
+                <div class="row mx-2">
+                    <div class="col-12 col-md-4 text-center text-md-start">
+                        <a href="#" class="text-white">Termos</a> | <a href="#" class="text-white">Políticas</a>
+                    </div>
 
+                    <div class="col-12 col-md-4 text-center">
+                        <span>&copy; Copyright 2022 | Desenvolvido por</span>
+                        <a href="https://site.alphacode.com.br/" target="_blank">
+                            <img src="../public/assets/logo_rodape_alphacode.png" alt="Logo rodapé Alphacode" style="width: 105px;">
+                        </a>
+                    </div>
+
+                    <div class="col-12 col-md-4 text-center text-md-end">
+                        <span>&copy;Alphacode IT Solutions 2022</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <script src="../public/js/cadastro.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
