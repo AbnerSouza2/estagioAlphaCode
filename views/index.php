@@ -150,7 +150,7 @@ $contatos = $contatoController->index();
                     <?php foreach ($contatos as $contato): ?>
                         <tr>
                             <td><?= $contato['nome'] ?></td>
-                            <td><?= $contato['data_nascimento'] ?></td>
+                            <td><?= (new DateTime($contato['data_nascimento']))->format('d/m/Y') ?></td>
                             <td><?= $contato['email'] ?></td>
                             <td><?= $contato['celular'] ?></td>
                             <td>
