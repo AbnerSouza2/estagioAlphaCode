@@ -12,13 +12,13 @@ $(document).ready(function () {
         }
     });
 
-    // Máscara para telefone e celular
+    // Carregar a biblioteca de máscara e aplicar a máscara nos campos
     $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js", function () {
-        $('#telefone').mask('(00) 0000-0000');
-        $('#celular').mask('(00) 90000-0000');
+        $('.modal #telefone, #telefone').mask('(00) 0000-0000');
+        $('.modal #celular, #celular').mask('(00) 90000-0000');
     });
 
-    // Função para exibir mensagem de erro 
+    // Função para exibir mensagem de erro
     function mostrarErro(campo, mensagem) {
         let feedback = $(campo).next(".invalid-feedback");
 
@@ -30,7 +30,7 @@ $(document).ready(function () {
         $(campo).addClass("is-invalid");
     }
 
-    // Função para remover a mensagem de erro 
+    // Função para remover a mensagem de erro
     function removerErro(campo) {
         $(campo).removeClass("is-invalid");
         let feedback = $(campo).next(".invalid-feedback");
@@ -42,7 +42,7 @@ $(document).ready(function () {
         }
     }
 
-    // Função para validar o nome do usuário
+    // Validação do nome
     function validarNome(input) {
         let nome = $(input).val();
 
@@ -60,9 +60,9 @@ $(document).ready(function () {
         }
     }
 
-    // Função para validar o email do usuário
+    // Validação do email
     function validarEmail(input) {
-        let email = $(input).val();
+        let email = $(input).val().trim();
         let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (email === "") {
@@ -74,90 +74,100 @@ $(document).ready(function () {
         }
     }
 
-    // Função para validar a data de nascimento do usuário
+    // Validação da data de nascimento
     function validarDataNascimento(input) {
         let data = new Date($(input).val());
         let anoMinimo = 1900;
         let anoMaximo = new Date().getFullYear();
         if (data.getFullYear() < anoMinimo || data.getFullYear() > anoMaximo) {
-            mostrarErro(input, `Digite uma data válida.`);
+            mostrarErro(input, "Digite uma data válida.");
         } else {
             removerErro(input);
         }
     }
 
-    // Validação do nome 
+    // Validação do celular
+    function validarCelular(input) {
+        let celular = $(input).val().trim();
+        let regex = /^\(\d{2}\) 9\d{4}-\d{4}$/;
+
+        if (celular === "") {
+            removerErro(input);
+        } else if (!regex.test(celular)) {
+            mostrarErro(input, "Digite um número de celular válido no formato (XX) 9XXXX-XXXX.");
+        } else {
+            removerErro(input);
+        }
+    }
+
+    // Validação ao digitar e sair do campo
     $(document).on("input", "#nome, .modal #nome", function () {
         validarNome(this);
     });
 
-    // Validação do email 
     $(document).on("blur", "#email, .modal #email", function () {
         validarEmail(this);
     });
 
-    // Validação da data de nascimento 
     $(document).on("blur", "#data_nascimento, .modal #data_nascimento", function () {
         validarDataNascimento(this);
     });
 
-    
-    // Exibição do Toast de sucesso sem repetição 
+    $(document).on("blur", "#celular, .modal #celular", function () {
+        validarCelular(this);
+    });
+
+    // Exibição do Toast de sucesso
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('sucesso') && urlParams.get('sucesso') === '1') {
         let toastElement = document.getElementById("toastSuccess");
 
         if (toastElement) {
             let toast = new bootstrap.Toast(toastElement);
-            toast.show();  
-         
+            toast.show();
+
             setTimeout(function () {
                 toast.hide();
-                history.replaceState(null, '', window.location.pathname);  
-            }, 4000);  
+                history.replaceState(null, '', window.location.pathname);
+            }, 4000);
         }
     }
 
+    // Verificar se pode salvar no modal
+    function verificarCamposModal() {
+        let modal = $(".modal");
+        let nome = modal.find("#nome").val().trim();
+        let email = modal.find("#email").val().trim();
+        let dataNascimento = modal.find("#data_nascimento").val().trim();
+        let celular = modal.find("#celular").val().trim();
+        let hasErrors = modal.find(".is-invalid").length > 0;
+        let botaoSalvar = modal.find(".modal-salvar");
 
- // Validação de salvar alterações somente se estiver tudo preenchido sem erros
-    $(document).ready(function () {
-        function verificarCamposModal() {
-            let modal = $(".modal");
-            let nome = modal.find("#nome").val().trim();
-            let email = modal.find("#email").val().trim();
-            let dataNascimento = modal.find("#data_nascimento").val().trim();
-            let hasErrors = modal.find(".is-invalid").length > 0;
-            let botaoSalvar = modal.find(".modal-salvar");
-    
-            if (nome !== "" && email !== "" && dataNascimento !== "" && !hasErrors) {
-                botaoSalvar.prop("disabled", false);
-            } else {
-                botaoSalvar.prop("disabled", true);
-            }
+        if (nome !== "" && email !== "" && dataNascimento !== "" && celular !== "" && !hasErrors) {
+            botaoSalvar.prop("disabled", false);
+        } else {
+            botaoSalvar.prop("disabled", true);
         }
-    
-        
-        $(document).on("input blur", ".modal #nome, .modal #email, .modal #data_nascimento", function () {
-            validarNome($("#nome"));
-            validarEmail($("#email"));
-            validarDataNascimento($("#data_nascimento"));
-            verificarCamposModal();
-        });
-    
-    
-        $(document).on("submit", ".modal form", function (e) {
-            verificarCamposModal(); 
-    
-            if ($(".modal .is-invalid").length > 0) {
-                alert("Por favor, corrija os campos inválidos antes de salvar.");
-                e.preventDefault(); 
-            }
-        });
-    
-   
-        $(".modal").on("show.bs.modal", function () {
-            $(".modal-salvar").prop("disabled", true);
-        });
+    }
+
+    $(document).on("input blur", ".modal #nome, .modal #email, .modal #data_nascimento, .modal #celular", function () {
+        validarNome($("#nome"));
+        validarEmail($("#email"));
+        validarDataNascimento($("#data_nascimento"));
+        validarCelular($("#celular"));
+        verificarCamposModal();
     });
-    
+
+    $(document).on("submit", ".modal form", function (e) {
+        verificarCamposModal();
+
+        if ($(".modal .is-invalid").length > 0) {
+            alert("Por favor, corrija os campos inválidos antes de salvar.");
+            e.preventDefault();
+        }
+    });
+
+    $(".modal").on("show.bs.modal", function () {
+        verificarCamposModal();
+    });
 });
