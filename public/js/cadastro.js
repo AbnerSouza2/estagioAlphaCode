@@ -18,12 +18,7 @@ $(document).ready(function () {
         $('#celular').mask('(00) 90000-0000');
     });
 
-    // Máscara para telefone e celular
-    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js", function () {
-        $('#telefone').mask('(00) 0000-0000');
-        $('#celular').mask('(00) 90000-0000');
-    });
-
+    // Função para exibir mensagem de erro 
     function mostrarErro(campo, mensagem) {
         let feedback = $(campo).next(".invalid-feedback");
 
@@ -35,6 +30,7 @@ $(document).ready(function () {
         $(campo).addClass("is-invalid");
     }
 
+    // Função para remover a mensagem de erro 
     function removerErro(campo) {
         $(campo).removeClass("is-invalid");
         let feedback = $(campo).next(".invalid-feedback");
@@ -46,75 +42,122 @@ $(document).ready(function () {
         }
     }
 
-    // Validação de Nome
-    $("#nome").on("input", function () {
-        let nome = $(this).val();
+    // Função para validar o nome do usuário
+    function validarNome(input) {
+        let nome = $(input).val();
 
         nome = nome.replace(/\b\w/g, (letra) => letra.toUpperCase()).replace(/\b(de|da|do|e|von)\b/g, (letra) => letra.toLowerCase());
-        $(this).val(nome);
+        $(input).val(nome);
 
-        let regex = /^[A-ZÀ-Ÿ][a-zà-ÿ]*(\s[A-ZÀ-Ÿ][a-zà-ÿ]+)*$/;
+        let regex = /^[A-ZÀ-Ÿ][a-zà-ÿ]+(\s[A-ZÀ-Ÿ][a-zà-ÿ]+)+$/;
 
         if (nome === "") {
-            removerErro(this);
+            removerErro(input);
         } else if (!regex.test(nome)) {
-            mostrarErro(this, "O nome deve conter pelo menos um sobrenome e começar com letra maiúscula.");
+            mostrarErro(input, "O nome deve conter pelo menos um sobrenome e começar com letra maiúscula.");
         } else {
-            removerErro(this);
+            removerErro(input);
         }
-    });
+    }
 
-    // Validação de Email
-    $("#email").on("blur", function () {
-        let email = $(this).val();
+    // Função para validar o email do usuário
+    function validarEmail(input) {
+        let email = $(input).val();
         let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
         if (email === "") {
-            removerErro(this);
+            removerErro(input);
         } else if (!regex.test(email)) {
-            mostrarErro(this, "Digite um email válido, como exemplo@gmail.com.");
+            mostrarErro(input, "Digite um email válido, como exemplo@gmail.com.");
         } else {
-            removerErro(this);
+            removerErro(input);
         }
-    });
+    }
 
-    // Validação de Data de Nascimento
-    $("#data_nascimento").on("blur", function () {
-        let data = new Date($(this).val());
+    // Função para validar a data de nascimento do usuário
+    function validarDataNascimento(input) {
+        let data = new Date($(input).val());
         let anoMinimo = 1900;
         let anoMaximo = new Date().getFullYear();
         if (data.getFullYear() < anoMinimo || data.getFullYear() > anoMaximo) {
-            mostrarErro(this, `Digite uma data válida`);
+            mostrarErro(input, `Digite uma data válida.`);
         } else {
-            removerErro(this);
+            removerErro(input);
         }
+    }
+
+    // Validação do nome 
+    $(document).on("input", "#nome, .modal #nome", function () {
+        validarNome(this);
     });
 
-    // Impedir envio do formulário caso haja erros
-    $("form").on("submit", function (e) {
-        if ($(".is-invalid").length > 0) {
-            alert("Por favor, corrija os campos inválidos antes de enviar.");
-            e.preventDefault();
-        }
+    // Validação do email 
+    $(document).on("blur", "#email, .modal #email", function () {
+        validarEmail(this);
     });
 
+    // Validação da data de nascimento 
+    $(document).on("blur", "#data_nascimento, .modal #data_nascimento", function () {
+        validarDataNascimento(this);
+    });
+
+    
+    // Exibição do Toast de sucesso sem repetição 
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('sucesso') && urlParams.get('sucesso') === '1') {
+        let toastElement = document.getElementById("toastSuccess");
+
+        if (toastElement) {
+            let toast = new bootstrap.Toast(toastElement);
+            toast.show();  
+         
+            setTimeout(function () {
+                toast.hide();
+                history.replaceState(null, '', window.location.pathname);  
+            }, 4000);  
+        }
+    }
+
+
+ // Validação de salvar alterações somente se estiver tudo preenchido sem erros
     $(document).ready(function () {
-        // Unificar exibição do Toast sem repetição
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('sucesso') && urlParams.get('sucesso') === '1') {
-            let toastElement = document.getElementById("toastSuccess");
-
-            if (toastElement) {
-                let toast = new bootstrap.Toast(toastElement);
-                toast.show();  
-             
-                setTimeout(function () {
-                    toast.hide();
-                    history.replaceState(null, '', window.location.pathname);  
-                }, 4000);  
+        function verificarCamposModal() {
+            let modal = $(".modal");
+            let nome = modal.find("#nome").val().trim();
+            let email = modal.find("#email").val().trim();
+            let dataNascimento = modal.find("#data_nascimento").val().trim();
+            let hasErrors = modal.find(".is-invalid").length > 0;
+            let botaoSalvar = modal.find(".modal-salvar");
+    
+            if (nome !== "" && email !== "" && dataNascimento !== "" && !hasErrors) {
+                botaoSalvar.prop("disabled", false);
+            } else {
+                botaoSalvar.prop("disabled", true);
             }
         }
+    
+        
+        $(document).on("input blur", ".modal #nome, .modal #email, .modal #data_nascimento", function () {
+            validarNome($("#nome"));
+            validarEmail($("#email"));
+            validarDataNascimento($("#data_nascimento"));
+            verificarCamposModal();
+        });
+    
+    
+        $(document).on("submit", ".modal form", function (e) {
+            verificarCamposModal(); 
+    
+            if ($(".modal .is-invalid").length > 0) {
+                alert("Por favor, corrija os campos inválidos antes de salvar.");
+                e.preventDefault(); 
+            }
+        });
+    
+   
+        $(".modal").on("show.bs.modal", function () {
+            $(".modal-salvar").prop("disabled", true);
+        });
     });
-
+    
 });
-
