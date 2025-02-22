@@ -8,7 +8,6 @@ class Contato {
         $this->conn = Database::getConnection();
     }
 
-    // Listar todos os contatos
     public function listar() {
         $sql = "SELECT id, nome, email, telefone, data_nascimento, profissao, celular, whatsapp, sms_notificacao, email_notificacao FROM contatos ORDER BY id DESC";
         $stmt = $this->conn->query($sql);
@@ -17,28 +16,26 @@ class Contato {
     
 
     // Adicionar novo contato
-public function salvar($dados) {
-    $stmt = $this->conn->prepare("INSERT INTO contatos (nome, email, telefone, celular, data_nascimento, profissao, whatsapp, email_notificacao, sms_notificacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    public function salvar($dados) {
+        $stmt = $this->conn->prepare("INSERT INTO contatos (nome, email, telefone, celular, data_nascimento, profissao, whatsapp, email_notificacao, sms_notificacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $resultado = $stmt->execute([
-        $dados['nome'], 
-        $dados['email'], 
-        $dados['telefone'], 
-        $dados['celular'],
-        $dados['data_nascimento'], 
-        $dados['profissao'], 
-        isset($dados['whatsapp']) ? 1 : 0,
-        isset($dados['email_notificacao']) ? 1 : 0, 
-        isset($dados['sms_notificacao']) ? 1 : 0
-    ]);
+        $resultado = $stmt->execute([
+            $dados['nome'], 
+            $dados['email'], 
+            $dados['telefone'], 
+            $dados['celular'],
+            $dados['data_nascimento'], 
+            $dados['profissao'], 
+            isset($dados['whatsapp']) ? 1 : 0,
+            isset($dados['email_notificacao']) ? 1 : 0, 
+            isset($dados['sms_notificacao']) ? 1 : 0
+        ]);
 
-    // Se o cadastro for bem-sucedido, define uma flag para exibir a Toast Notification
     if ($resultado) {
         header("Location: index.php?sucesso=1");
         exit();
     }
 }
-
 
     public function atualizar($dados) {
         if (!isset($dados['id'])) {
@@ -62,7 +59,6 @@ public function salvar($dados) {
         ]);
     }
     
-    // Excluir um contato
     public function excluir($id) {
         $stmt = $this->conn->prepare("DELETE FROM contatos WHERE id=?");
         return $stmt->execute([$id]);
