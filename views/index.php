@@ -169,7 +169,7 @@ $contatos = $contatoController->index();
                         </tr>
 
                         <!-- Modal de Edição para o contato -->
-                      <div class="modal fade" id="editModal<?= $contato['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $contato['id'] ?>" aria-hidden="true">
+                    <div class="modal fade" id="editModal<?= $contato['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $contato['id'] ?>" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content shadow-lg rounded-5 border-0">
                                 <div class="modal-header bg rounded-top-4 modal-cabecalho">
