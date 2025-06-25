@@ -48,13 +48,6 @@ Garante que os dados inseridos sejam válidos antes de serem armazenados.
 
 
 
-
-## Demonstração Online
-
-Para facilitar o teste do CRUD sem necessidade de instalação, o projeto está hospedado online. Acesse:
-
-🔗 https://abnsoftwares.com/views/
-
 ### Autor
 
 👨‍💻 Abner de Souza
